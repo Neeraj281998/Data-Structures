@@ -68,3 +68,35 @@ class BinaryTree:
                 return
             return self.search_data(node.right,data)
    #========================================================
+def remove_Node(self,node,data):
+        if not node:
+            return 'BST is empty'
+        if data<node.data:
+            node.left=self.remove_Node(node.left,data)
+        elif data>node.data:
+            node.right=self.remove_Node(node.right,data)
+        else:
+            if not node.right and not node.left:  #Case 1: Leaf node
+                print('Removing the leaf node')
+                del node
+                return 
+            elif not node.left:                     # Case 2  (a): Only right Child
+                print("Removing node with right Child")
+                temp=node.right
+                del node
+                return temp
+            elif not node.right:                     # Case 2 (b): Only left Child
+                print("Removing node with left Child")
+                temp=node.left
+                del node
+                return temp
+            print("Removing the nodw with 2 child")     #Case 3 : Node with both child
+            temp=self.getPredecessor(node.left)
+            node.data=temp.data
+            node.left=self.remove_Node(node.left,temp.data)
+        return node
+    def getPredecessor(self,node):
+        if node.right:
+            return self.getPredecessor(node.right)
+        return node
+
